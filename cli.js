@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-/* eslint-disable no-mixed-spaces-and-tabs */
 'use strict';
 const logSymbols = require('log-symbols');
 const meow = require('meow');
