@@ -23,6 +23,6 @@ if (cli.input.length === 0) {
 }
 
 npmName(cli.input[0]).then(available => {
-	console.log(available ? `${logSymbols.success} Available` : `${logSymbols.error} Unavailable`);
+	console.log(available ? `${logSymbols.success} "${cli.input[0]}" is available` : `${logSymbols.error} "${cli.input[0]}" is unavailable`);
 	process.exit(available ? 0 : 2);
 });
