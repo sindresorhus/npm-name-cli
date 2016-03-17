@@ -4,6 +4,7 @@ import pify from 'pify';
 import logSymbols from 'log-symbols';
 
 test(async t => {
-	const stdout = await pify(childProcess.execFile)('./cli.js', ['unicorn-rainbow-2524342', '--color'], {cwd: __dirname});
-	t.is(stdout.trim(), `${logSymbols.success} Available`);
+	const rand = `asdasfgrgafadsgaf + ${Math.random().toString().slice(2)}`;
+	const stdout = await pify(childProcess.execFile)('./cli.js', [rand, '--color'], {cwd: __dirname});
+	t.is(stdout.trim(), `${logSymbols.success} "${rand}" is available`);
 });
