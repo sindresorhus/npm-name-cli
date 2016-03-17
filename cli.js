@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 'use strict';
-const logSymbols = require('log-symbols');
 const meow = require('meow');
+const logSymbols = require('log-symbols');
+const chalk = require('chalk');
 const npmName = require('npm-name');
 
 const cli = meow(`
@@ -10,19 +11,22 @@ const cli = meow(`
 
 	Examples
 	  $ npm-name chalk
-	  ${logSymbols.error} Unavailable
+	  ${logSymbols.error} ${chalk.bold('chalk')} is unavailable
 	  $ npm-name unicorn-cake
-	  ${logSymbols.success} Available
+	  ${logSymbols.success} ${chalk.bold('unicorn-cake')} is available
 
 	Exits with code 0 when the name is available or 2 when taken
 `);
 
-if (cli.input.length === 0) {
+const input = cli.input[0];
+
+if (!input) {
 	console.error('Package name required');
 	process.exit(1);
 }
 
-npmName(cli.input[0]).then(available => {
-	console.log(available ? `${logSymbols.success} "${cli.input[0]}" is available` : `${logSymbols.error} "${cli.input[0]}" is unavailable`);
+npmName(input).then(available => {
+	const name = chalk.bold(input);
+	console.log(available ? `${logSymbols.success} ${name} is available` : `${logSymbols.error} ${name} is unavailable`);
 	process.exit(available ? 0 : 2);
 });

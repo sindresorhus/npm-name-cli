@@ -2,7 +2,7 @@
 
 > Check whether a package name is available on npm
 
-<img src="https://cloud.githubusercontent.com/assets/170270/8269981/6d394f42-17c4-11e5-8da3-fdb3e251d535.png" width="332">
+![](screenshot.png)
 
 
 ## Install
@@ -22,9 +22,9 @@ $ npm-name --help
 
   Examples
     $ npm-name chalk
-    ✖ Unavailable
+    ✖ chalk is unavailable
     $ npm-name unicorn-cake
-    ✔ Available
+    ✔ unicorn-cake is available
 
   Exits with code 0 when the name is available or 2 when taken
 ```
@@ -37,4 +37,4 @@ $ npm-name --help
 
 ## License
 
-MIT © [Sindre Sorhus](http://sindresorhus.com)
+MIT © [Sindre Sorhus](https://sindresorhus.com)
