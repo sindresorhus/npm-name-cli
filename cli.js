@@ -16,7 +16,9 @@ const cli = meow(`
 	  ${logSymbols.success} ${chalk.bold('unicorn-cake')} is available
 
 	Exits with code 0 when the name is available or 2 when taken
-`);
+`, {
+	string: ['_']
+});
 
 const input = cli.input[0];
 
