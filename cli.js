@@ -20,7 +20,11 @@ const cli = meow(`
 	string: ['_']
 });
 
-const input = cli.input[0];
+let input = cli.input[0];
+
+if (input.indexOf(',') > -1) {
+	input = input.split(',');
+}
 
 if (!input) {
 	console.error('Package name required');
@@ -28,7 +32,22 @@ if (!input) {
 }
 
 npmName(input).then(available => {
+	let exitWithError = available;
+
+	if (available instanceof Array) {
+		for (let i = 0, len = available.length; i < len; i++) {
+			outputStatus(input[i], available[i]);
+		}
+
+		exitWithError = available.indexOf(false) > -1;
+	} else {
+		outputStatus(input, available);
+	}
+
+	process.exit(exitWithError ? 0 : 2);
+});
+
+function outputStatus(input, available) {
 	const name = chalk.bold(input);
 	console.log(available ? `${logSymbols.success} ${name} is available` : `${logSymbols.error} ${name} is unavailable`);
-	process.exit(available ? 0 : 2);
-});
+}

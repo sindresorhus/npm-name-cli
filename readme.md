@@ -18,13 +18,18 @@ $ npm install --global npm-name-cli
 $ npm-name --help
 
   Usage
-    $ npm-name <name>
+    $ npm-name <names>
 
   Examples
     $ npm-name chalk
     ✖ chalk is unavailable
+
     $ npm-name unicorn-cake
     ✔ unicorn-cake is available
+
+		$ npm-name chalk,unicorn-cake
+		✖ chalk is unavailable
+		✔ unicorn-cake is available
 
   Exits with code 0 when the name is available or 2 when taken
 ```
