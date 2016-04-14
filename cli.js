@@ -32,16 +32,7 @@ if (input.length === 0) {
 
 npmName.many(input).then(available => {
 	available.forEach(outputStatus);
-
-	let hasFalseValue = false;
-	for (const i of available.values()) {
-		if (!i) {
-			hasFalseValue = true;
-			break;
-		}
-	}
-
-	process.exit(hasFalseValue ? 2 : 0);
+	process.exit(Array.from(available.values()).every(Boolean) ? 0 : 2);
 });
 
 function outputStatus(value, key) {
