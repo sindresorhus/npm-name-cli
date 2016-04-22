@@ -39,7 +39,7 @@
     "chalk": "^1.1.1",
     "log-symbols": "^1.0.2",
     "meow": "^3.4.2",
-    "npm-name": "^2.0.0"
+    "npm-name": "^3.0.0"
   },
   "devDependencies": {
     "ava": "*",

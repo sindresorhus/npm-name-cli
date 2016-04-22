@@ -1,8 +1,21 @@
 import test from 'ava';
 import execa from 'execa';
 
-test(async t => {
-	const pkgName = `asdasfgrgafadsgaf${Math.random().toString().slice(2)}`;
-	const ret = await execa('./cli.js', [pkgName, '--color'], {cwd: __dirname});
+const randomName = () => `asdasfgrgafadsgaf${Math.random().toString().slice(2)}`;
+
+test('is available', async t => {
+	const ret = await execa('./cli.js', [randomName(), '--color'], {cwd: __dirname});
 	t.regex(ret.stdout, /is available/);
+});
+
+test('is unavailable', async t => {
+	const ret = await t.throws(execa('./cli.js', ['chalk', '--color'], {cwd: __dirname}));
+	t.is(ret.code, 2);
+	t.regex(ret.stdout, /is unavailable/);
+});
+
+test('multiple packages', async t => {
+	const ret = await t.throws(execa('./cli.js', ['chalk', randomName(), '--color'], {cwd: __dirname}));
+	t.is(ret.code, 2);
+	t.regex(ret.stdout, /is unavailable([\s\S]*)is available/);
 });
