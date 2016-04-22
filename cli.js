@@ -7,7 +7,7 @@ const npmName = require('npm-name');
 
 const cli = meow(`
 	Usage
-	  $ npm-name <name> ...
+	  $ npm-name <name> …
 
 	Examples
 	  $ npm-name chalk
@@ -26,16 +26,16 @@ const cli = meow(`
 const input = cli.input;
 
 if (input.length === 0) {
-	console.error('Package name required');
+	console.error('Specify a package name');
 	process.exit(1);
 }
 
+function log(val, key) {
+	const name = chalk.bold(key);
+	console.log(val ? `${logSymbols.success} ${name} is available` : `${logSymbols.error} ${name} is unavailable`);
+}
+
 npmName.many(input).then(available => {
-	available.forEach(outputStatus);
+	available.forEach(log);
 	process.exit(Array.from(available.values()).every(Boolean) ? 0 : 2);
 });
-
-function outputStatus(value, key) {
-	const name = chalk.bold(key);
-	console.log(value ? `${logSymbols.success} ${name} is available` : `${logSymbols.error} ${name} is unavailable`);
-}

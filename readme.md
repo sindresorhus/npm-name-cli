@@ -17,19 +17,19 @@ $ npm install --global npm-name-cli
 ```
 $ npm-name --help
 
-	Usage
-	  $ npm-name <name> ...
+  Usage
+    $ npm-name <name> …
 
-	Examples
-	  $ npm-name chalk
-	  ✖ chalk is unavailable
-	  $ npm-name unicorn-cake
-	  ✔ unicorn-cake is available
-	  $ npm-name chalk unicorn-cake
-	  ✖ chalk is unavailable
-	  ✔ unicorn-cake is available
+  Examples
+    $ npm-name chalk
+    ✖ chalk is unavailable
+    $ npm-name unicorn-cake
+    ✔ unicorn-cake is available
+    $ npm-name chalk unicorn-cake
+    ✖ chalk is unavailable
+    ✔ unicorn-cake is available
 
-	Exits with code 0 when all names are available or 2 when any names are taken
+  Exits with code 0 when all names are available or 2 when any names are taken
 ```
 
 
