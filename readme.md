@@ -33,6 +33,27 @@ $ npm-name --help
 ```
 
 
+## Why?
+
+You might rightly ask, "Why would I use npm-name rather than npm's built-in search?".
+There are two big reasons
+
+1) [npm search is only supported on npm 4](https://github.com/npm/npm/issues/14649#issuecomment-262820415)
+, which is not yet bundled with node.
+
+2) Performance
+
+Using npm 4.0.2
+
+```
+$ time npm search unicorn-cake
+No matches found for "unicorn-cake"
+npm search unicorn-cake  55.50s user 0.82s system 101% cpu 55.380 total
+$ time npm-name unicorn-cake  
+✔ unicorn-cake is available
+npm-name unicorn-cake  0.17s user 0.02s system 35% cpu 0.535 total
+```
+
 ## Related
 
 - [npm-name](https://github.com/sindresorhus/npm-name) - API for this module
