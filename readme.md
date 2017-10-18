@@ -23,6 +23,8 @@ $ npm-name --help
   Examples
     $ npm-name chalk
     ✖ chalk is unavailable
+    $ npm-name foo
+    ⚠ foo is squatted
     $ npm-name unicorn-cake
     ✔ unicorn-cake is available
     $ npm-name chalk unicorn-cake
@@ -39,9 +41,11 @@ $ npm-name --help
 
 1. Nicer & simpler output
 
-2. [npm search is only supported on npm 4](https://github.com/npm/npm/issues/14649#issuecomment-262820415), which is not yet bundled with Node.js
+2. [npm search is only supported on npm 4](https://github.com/npm/npm/issues/14649#issuecomment-262820415), which is only bundled with Node.js 7.4+
 
-3. Performance
+3. [Squatter detection](https://github.com/sholladay/squatter)
+
+4. Performance
 
   Using npm 4.0.2
 
@@ -49,7 +53,7 @@ $ npm-name --help
   $ time npm search unicorn-cake
   No matches found for "unicorn-cake"
   npm search unicorn-cake  55.50s user 0.82s system 101% cpu 55.380 total
-  $ time npm-name unicorn-cake  
+  $ time npm-name unicorn-cake
   ✔ unicorn-cake is available
   npm-name unicorn-cake  0.17s user 0.02s system 35% cpu 0.535 total
   ```
