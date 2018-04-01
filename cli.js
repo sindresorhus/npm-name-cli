@@ -17,19 +17,17 @@ const cli = meow(`
 	  ${logSymbols.warning} ${chalk.bold('foo')} is squatted
 	  $ npm-name unicorn-cake
 	  ${logSymbols.success} ${chalk.bold('unicorn-cake')} is available
-	  $ npm-name chalk unicorn-cake
-	  ${logSymbols.error} ${chalk.bold('chalk')} is unavailable
+	  $ npm-name @sindresorhus/is unicorn-cake
+	  ${logSymbols.error} ${chalk.bold('@sindresorhus/is')} is unavailable
 	  ${logSymbols.success} ${chalk.bold('unicorn-cake')} is available
 
 	Exits with code 0 when all names are available or 2 when any names are taken
-`, {
-	string: ['_']
-});
+`);
 
 const input = cli.input;
 
 if (input.length === 0) {
-	console.error('Specify a package name');
+	console.error('Specify one or more package names');
 	process.exit(1);
 }
 
