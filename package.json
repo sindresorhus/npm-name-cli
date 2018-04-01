@@ -13,7 +13,7 @@
 		"npm-name": "cli.js"
 	},
 	"engines": {
-		"node": ">=4"
+		"node": ">=8"
 	},
 	"scripts": {
 		"test": "xo && ava"

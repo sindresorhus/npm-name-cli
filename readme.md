@@ -4,6 +4,8 @@
 
 ![](screenshot.png)
 
+*Feedback about the squatter detection should be opened on the [`squatter`](https://github.com/sholladay/squatter) repo.*
+
 
 ## Install
 
@@ -23,8 +25,8 @@ $ npm-name --help
   Examples
     $ npm-name chalk
     ✖ chalk is unavailable
-    $ npm-name foo
-    ⚠ foo is squatted
+    $ npm-name abc123
+    ⚠ abc123 is squatted
     $ npm-name unicorn-cake
     ✔ unicorn-cake is available
     $ npm-name @sindresorhus/is unicorn-cake

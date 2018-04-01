@@ -13,8 +13,8 @@ const cli = meow(`
 	Examples
 	  $ npm-name chalk
 	  ${logSymbols.error} ${chalk.bold('chalk')} is unavailable
-	  $ npm-name foo
-	  ${logSymbols.warning} ${chalk.bold('foo')} is squatted
+	  $ npm-name abc123
+	  ${logSymbols.warning} ${chalk.bold('abc123')} is squatted
 	  $ npm-name unicorn-cake
 	  ${logSymbols.success} ${chalk.bold('unicorn-cake')} is available
 	  $ npm-name @sindresorhus/is unicorn-cake
@@ -24,7 +24,7 @@ const cli = meow(`
 	Exits with code 0 when all names are available or 2 when any names are taken
 `);
 
-const input = cli.input;
+const {input} = cli;
 
 if (input.length === 0) {
 	console.error('Specify one or more package names');
@@ -33,29 +33,31 @@ if (input.length === 0) {
 
 function log(pkg) {
 	const name = chalk.bold(pkg.name);
-	if (pkg.available) {
+	if (pkg.isAvailable) {
 		console.log(`${logSymbols.success} ${name} is available`);
-	} else if (pkg.squatter) {
+	} else if (pkg.isSquatter) {
 		console.log(`${logSymbols.warning} ${name} is squatted`);
 	} else {
 		console.log(`${logSymbols.error} ${name} is unavailable`);
 	}
 }
 
-npmName.many(input)
-	.then(available => {
-		return Promise.all(Array.from(available.entries()).map(([key, val]) => {
-			const ret = {
-				name: key,
-				available: val
-			};
-			return val ? ret : squatter(key).then(isSquatter => {
-				ret.squatter = isSquatter;
-				return ret;
-			});
-		}));
-	})
-	.then(pkgs => {
-		pkgs.forEach(log);
-		process.exit(pkgs.every(pkg => Boolean(pkg.available || pkg.squatter)) ? 0 : 2);
-	});
+(async () => {
+	const result = await npmName.many(input);
+
+	const packages = await Promise.all([...result].map(async ([name, isAvailable]) => {
+		const ret = {name, isAvailable};
+
+		if (!isAvailable) {
+			ret.isSquatter = await squatter(name);
+		}
+
+		return ret;
+	}));
+
+	for (const pkg of packages) {
+		log(pkg);
+	}
+
+	process.exit(packages.every(pkg => Boolean(pkg.isAvailable || pkg.isSquatter)) ? 0 : 2);
+})();
