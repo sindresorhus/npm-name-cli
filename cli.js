@@ -3,6 +3,7 @@
 const meow = require('meow');
 const logSymbols = require('log-symbols');
 const chalk = require('chalk');
+const squatter = require('squatter');
 const npmName = require('npm-name');
 
 const cli = meow(`
@@ -12,6 +13,8 @@ const cli = meow(`
 	Examples
 	  $ npm-name chalk
 	  ${logSymbols.error} ${chalk.bold('chalk')} is unavailable
+	  $ npm-name foo
+	  ${logSymbols.warning} ${chalk.bold('foo')} is squatted
 	  $ npm-name unicorn-cake
 	  ${logSymbols.success} ${chalk.bold('unicorn-cake')} is available
 	  $ npm-name chalk unicorn-cake
@@ -30,12 +33,31 @@ if (input.length === 0) {
 	process.exit(1);
 }
 
-function log(val, key) {
-	const name = chalk.bold(key);
-	console.log(val ? `${logSymbols.success} ${name} is available` : `${logSymbols.error} ${name} is unavailable`);
+function log(pkg) {
+	const name = chalk.bold(pkg.name);
+	if (pkg.available) {
+		console.log(`${logSymbols.success} ${name} is available`);
+	} else if (pkg.squatter) {
+		console.log(`${logSymbols.warning} ${name} is squatted`);
+	} else {
+		console.log(`${logSymbols.error} ${name} is unavailable`);
+	}
 }
 
-npmName.many(input).then(available => {
-	available.forEach(log);
-	process.exit(Array.from(available.values()).every(Boolean) ? 0 : 2);
-});
+npmName.many(input)
+	.then(available => {
+		return Promise.all(Array.from(available.entries()).map(([key, val]) => {
+			const ret = {
+				name: key,
+				available: val
+			};
+			return val ? ret : squatter(key).then(isSquatter => {
+				ret.squatter = isSquatter;
+				return ret;
+			});
+		}));
+	})
+	.then(pkgs => {
+		pkgs.forEach(log);
+		process.exit(pkgs.every(pkg => Boolean(pkg.available || pkg.squatter)) ? 0 : 2);
+	});

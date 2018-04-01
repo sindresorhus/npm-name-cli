@@ -8,6 +8,11 @@ test('is available', async t => {
 	t.regex(ret.stdout, /is available/);
 });
 
+test('is squatted', async t => {
+	const ret = await execa('./cli.js', ['foo', '--color'], {cwd: __dirname});
+	t.regex(ret.stdout, /is squatted/);
+});
+
 test('is unavailable', async t => {
 	const ret = await t.throws(execa('./cli.js', ['chalk', '--color'], {cwd: __dirname}));
 	t.is(ret.code, 2);
