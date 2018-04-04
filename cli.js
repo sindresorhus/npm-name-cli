@@ -5,6 +5,7 @@ const logSymbols = require('log-symbols');
 const chalk = require('chalk');
 const squatter = require('squatter');
 const npmName = require('npm-name');
+const terminalLink = require('terminal-link');
 
 const cli = meow(`
 	Usage
@@ -32,13 +33,15 @@ if (input.length === 0) {
 }
 
 function log(pkg) {
-	const name = chalk.bold(pkg.name);
+	const styledName = chalk.bold(pkg.name);
+	const linkedName = terminalLink(styledName, `https://www.npmjs.com/package/${pkg.name}`);
+
 	if (pkg.isAvailable) {
-		console.log(`${logSymbols.success} ${name} is available`);
+		console.log(`${logSymbols.success} ${styledName} is available`);
 	} else if (pkg.isSquatter) {
-		console.log(`${logSymbols.warning} ${name} is squatted`);
+		console.log(`${logSymbols.warning} ${linkedName} is squatted`);
 	} else {
-		console.log(`${logSymbols.error} ${name} is unavailable`);
+		console.log(`${logSymbols.error} ${linkedName} is unavailable`);
 	}
 }
 

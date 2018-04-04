@@ -2,7 +2,7 @@
 
 > Check whether a package name is available on npm
 
-![](screenshot.png)
+<img src="screenshot.gif" width="300">
 
 *Feedback about the squatter detection should be opened on the [`squatter`](https://github.com/sholladay/squatter) repo.*
 
