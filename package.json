@@ -1,6 +1,6 @@
 {
 	"name": "npm-name-cli",
-	"version": "2.1.0",
+	"version": "2.2.0",
 	"description": "Check whether a package name is available on npm",
 	"license": "MIT",
 	"repository": "sindresorhus/npm-name-cli",
