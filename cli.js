@@ -46,7 +46,7 @@ function log(pkg) {
 	}
 }
 
-const spinner = ora('Checking name on npmjs.com...');
+const spinner = ora('Checking names npmjs.com...');
 spinner.start();
 
 (async () => {
