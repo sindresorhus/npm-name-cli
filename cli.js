@@ -27,10 +27,15 @@ const cli = meow(`
 `);
 
 const {input} = cli;
+let spinner;
 
 if (input.length === 0) {
 	console.error('Specify one or more package names');
 	process.exit(1);
+} else if (input.length === 1) {
+	spinner = ora('Checking name npmjs.com…');
+} else {
+	spinner = ora('Checking names npmjs.com…');
 }
 
 function log(pkg) {
@@ -46,7 +51,6 @@ function log(pkg) {
 	}
 }
 
-const spinner = ora('Checking names npmjs.com...');
 spinner.start();
 
 (async () => {
