@@ -6,6 +6,7 @@ const chalk = require('chalk');
 const squatter = require('squatter');
 const npmName = require('npm-name');
 const terminalLink = require('terminal-link');
+const ora = require('ora');
 
 const cli = meow(`
 	Usage
@@ -45,6 +46,8 @@ function log(pkg) {
 	}
 }
 
+const spinner = ora(`Checking ${input.length === 1 ? 'name' : 'names'} on npmjs.com…`).start();
+
 (async () => {
 	const result = await npmName.many(input);
 
@@ -57,6 +60,8 @@ function log(pkg) {
 
 		return ret;
 	}));
+
+	spinner.stop();
 
 	for (const pkg of packages) {
 		log(pkg);
