@@ -68,4 +68,8 @@ const spinner = ora(`Checking ${input.length === 1 ? 'name' : 'names'} on npmjs.
 	}
 
 	process.exit(packages.every(pkg => Boolean(pkg.isAvailable || pkg.isSquatter)) ? 0 : 2);
-})();
+})().catch(error => {
+	spinner.stop();
+	console.error(error);
+	process.exit(1);
+});
