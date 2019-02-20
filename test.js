@@ -4,23 +4,23 @@ import execa from 'execa';
 const randomName = () => `asdasfgrgafadsgaf${Math.random().toString().slice(2)}`;
 
 test('is available', async t => {
-	const ret = await execa('./cli.js', [randomName(), '--color']);
-	t.regex(ret.stdout, /is available/);
+	const {stdout} = await execa('./cli.js', [randomName(), '--color']);
+	t.regex(stdout, /is available/);
 });
 
 test('is squatted', async t => {
-	const ret = await execa('./cli.js', ['abc123', '--color']);
-	t.regex(ret.stdout, /is squatted/);
+	const {stdout} = await execa('./cli.js', ['abc123', '--color']);
+	t.regex(stdout, /is squatted/);
 });
 
 test('is unavailable', async t => {
-	const ret = await t.throws(execa('./cli.js', ['chalk', '--color']));
-	t.is(ret.code, 2);
-	t.regex(ret.stdout, /is unavailable/);
+	const {stdout, code} = await t.throwsAsync(execa('./cli.js', ['chalk', '--color']));
+	t.is(code, 2);
+	t.regex(stdout, /is unavailable/);
 });
 
 test('multiple packages', async t => {
-	const ret = await t.throws(execa('./cli.js', ['chalk', randomName(), '--color']));
-	t.is(ret.code, 2);
-	t.regex(ret.stdout, /is unavailable([\s\S]*)is available/);
+	const {stdout, code} = await t.throwsAsync(execa('./cli.js', ['chalk', randomName(), '--color']));
+	t.is(code, 2);
+	t.regex(stdout, /is unavailable(.*)is available/s);
 });

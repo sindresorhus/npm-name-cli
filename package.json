@@ -36,17 +36,17 @@
 		"find"
 	],
 	"dependencies": {
-		"chalk": "^2.3.2",
+		"chalk": "^2.4.2",
 		"log-symbols": "^2.2.0",
 		"meow": "^5.0.0",
-		"npm-name": "^5.0.0",
-		"ora": "3.0.0",
+		"npm-name": "^5.1.0",
+		"ora": "^3.1.0",
 		"squatter": "^0.2.0",
-		"terminal-link": "^1.0.0"
+		"terminal-link": "^1.2.0"
 	},
 	"devDependencies": {
-		"ava": "*",
-		"execa": "^0.10.0",
-		"xo": "*"
+		"ava": "^1.2.1",
+		"execa": "^1.0.0",
+		"xo": "^0.24.0"
 	}
 }
