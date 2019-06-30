@@ -7,9 +7,7 @@ const squatter = require('squatter');
 const npmName = require('npm-name');
 const terminalLink = require('terminal-link');
 const ora = require('ora');
-
-// TODO: Move to a seperate package
-const organizationRegex = /^@[a-z\d][\w-.]+\/?$/;
+const organizationRegex = require('org-regex')({exact: true});
 
 const cli = meow(`
 	Usage
