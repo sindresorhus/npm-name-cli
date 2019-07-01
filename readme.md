@@ -47,9 +47,9 @@ $ npm-name --help
 
 1. Nicer & simpler output
 
-2. [npm search is only supported on npm 4](https://github.com/npm/npm/issues/14649#issuecomment-262820415), which is only bundled with Node.js 7.4+
+2. [Squatter detection](https://github.com/sholladay/squatter)
 
-3. [Squatter detection](https://github.com/sholladay/squatter)
+3. Supports checking the availability of organization names
 
 4. Performance
 
@@ -68,8 +68,3 @@ $ npm-name --help
 ## Related
 
 - [npm-name](https://github.com/sindresorhus/npm-name) - API for this module
-
-
-## License
-
-MIT © [Sindre Sorhus](https://sindresorhus.com)
