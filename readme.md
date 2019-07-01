@@ -1,6 +1,6 @@
 # npm-name-cli [![Build Status](https://travis-ci.org/sindresorhus/npm-name-cli.svg?branch=master)](https://travis-ci.org/sindresorhus/npm-name-cli)
 
-> Check whether a package name is available on npm
+> Check whether a package or organization name is available on npm
 
 <img src="screenshot.gif" width="300">
 
@@ -29,6 +29,10 @@ $ npm-name --help
     ⚠ abc123 is squatted
     $ npm-name unicorn-cake
     ✔ unicorn-cake is available
+    $ npm-name @ava
+    ✖ @ava is unavailable
+    $ npm-name @abc123
+    ✔ @abc123 is available
     $ npm-name @sindresorhus/is unicorn-cake
     ✖ @sindresorhus/is is unavailable
     ✔ unicorn-cake is available

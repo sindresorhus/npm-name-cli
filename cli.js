@@ -7,6 +7,7 @@ const squatter = require('squatter');
 const npmName = require('npm-name');
 const terminalLink = require('terminal-link');
 const ora = require('ora');
+const organizationRegex = require('org-regex')({exact: true});
 
 const cli = meow(`
 	Usage
@@ -19,6 +20,10 @@ const cli = meow(`
 	  ${logSymbols.warning} ${chalk.bold('abc123')} is squatted
 	  $ npm-name unicorn-cake
 	  ${logSymbols.success} ${chalk.bold('unicorn-cake')} is available
+	  $ npm-name @ava
+	  ${logSymbols.error} ${chalk.bold('@ava')} is unavailable
+	  $ npm-name @abc123
+	  ${logSymbols.success} ${chalk.bold('@abc123')} is available
 	  $ npm-name @sindresorhus/is unicorn-cake
 	  ${logSymbols.error} ${chalk.bold('@sindresorhus/is')} is unavailable
 	  ${logSymbols.success} ${chalk.bold('unicorn-cake')} is available
@@ -35,7 +40,9 @@ if (input.length === 0) {
 
 function log(pkg) {
 	const styledName = chalk.bold(pkg.name);
-	const linkedName = terminalLink(styledName, `https://www.npmjs.com/package/${pkg.name}`);
+	const linkedName = pkg.isOrganization ?
+		terminalLink(styledName, `https://www.npmjs.com/org/${pkg.name}`) :
+		terminalLink(styledName, `https://www.npmjs.com/package/${pkg.name}`);
 
 	if (pkg.isAvailable) {
 		console.log(`${logSymbols.success} ${styledName} is available`);
@@ -52,10 +59,10 @@ const spinner = ora(`Checking ${input.length === 1 ? 'name' : 'names'} on npmjs.
 	const result = await npmName.many(input);
 
 	const packages = await Promise.all([...result].map(async ([name, isAvailable]) => {
-		const ret = {name, isAvailable};
+		const ret = {name, isAvailable, isOrganization: organizationRegex.test(name)};
 
-		if (!isAvailable) {
-			ret.isSquatter = await squatter(name);
+		if (!isAvailable && !ret.isOrganization) {
+			ret.isSquatter = await squatter(ret.name);
 		}
 
 		return ret;

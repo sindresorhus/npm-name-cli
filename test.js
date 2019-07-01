@@ -19,6 +19,17 @@ test('is unavailable', async t => {
 	t.regex(stdout, /is unavailable/);
 });
 
+test('organization is available', async t => {
+	const {stdout} = await execa('./cli.js', [`@${randomName()}`, '--color']);
+	t.regex(stdout, /is available/);
+});
+
+test('organization is unavailable', async t => {
+	const {stdout, code} = await t.throwsAsync(execa('./cli.js', ['@ava', '--color']));
+	t.is(code, 2);
+	t.regex(stdout, /is unavailable/);
+});
+
 test('multiple packages', async t => {
 	const {stdout, code} = await t.throwsAsync(execa('./cli.js', ['chalk', randomName(), '--color']));
 	t.is(code, 2);
