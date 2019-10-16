@@ -41,7 +41,7 @@ if (input.length === 0) {
 function log(pkg) {
 	const styledName = chalk.bold(pkg.name);
 	const linkedName = pkg.isOrganization ?
-		terminalLink(styledName, `https://www.npmjs.com/org/${pkg.name}`) :
+		terminalLink(styledName, `https://www.npmjs.com/org/${pkg.name.slice(1)}`) :
 		terminalLink(styledName, `https://www.npmjs.com/package/${pkg.name}`);
 
 	if (pkg.isAvailable) {
