@@ -14,8 +14,8 @@ test('is squatted', async t => {
 });
 
 test('is unavailable', async t => {
-	const {stdout, code} = await t.throwsAsync(execa('./cli.js', ['chalk', '--color']));
-	t.is(code, 2);
+	const {stdout, exitCode} = await t.throwsAsync(execa('./cli.js', ['chalk', '--color']));
+	t.is(exitCode, 2);
 	t.regex(stdout, /is unavailable/);
 });
 
@@ -25,13 +25,13 @@ test('organization is available', async t => {
 });
 
 test('organization is unavailable', async t => {
-	const {stdout, code} = await t.throwsAsync(execa('./cli.js', ['@ava', '--color']));
-	t.is(code, 2);
+	const {stdout, exitCode} = await t.throwsAsync(execa('./cli.js', ['@ava', '--color']));
+	t.is(exitCode, 2);
 	t.regex(stdout, /is unavailable/);
 });
 
 test('multiple packages', async t => {
-	const {stdout, code} = await t.throwsAsync(execa('./cli.js', ['chalk', randomName(), '--color']));
-	t.is(code, 2);
+	const {stdout, exitCode} = await t.throwsAsync(execa('./cli.js', ['chalk', randomName(), '--color']));
+	t.is(exitCode, 2);
 	t.regex(stdout, /is unavailable(.*)is available/s);
 });

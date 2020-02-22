@@ -6,13 +6,11 @@
 
 *Feedback about the squatter detection should be opened on the [`squatter`](https://github.com/sholladay/squatter) repo.*
 
-
 ## Install
 
 ```
 $ npm install --global npm-name-cli
 ```
-
 
 ## Usage
 
@@ -40,7 +38,6 @@ $ npm-name --help
   Exits with code 0 when all names are available or 2 when any names are taken
 ```
 
-
 ## FAQ
 
 ### Why would I use `npm-name` rather than npm's built-in search?
@@ -63,7 +60,6 @@ $ npm-name --help
   ✔ unicorn-cake is available
   npm-name unicorn-cake  0.17s user 0.02s system 35% cpu 0.535 total
   ```
-
 
 ## Related
 

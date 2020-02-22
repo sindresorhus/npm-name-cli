@@ -4,16 +4,17 @@
 	"description": "Check whether a package or organization name is available on npm",
 	"license": "MIT",
 	"repository": "sindresorhus/npm-name-cli",
+	"funding": "https://github.com/sponsors/sindresorhus",
 	"author": {
 		"name": "Sindre Sorhus",
 		"email": "sindresorhus@gmail.com",
-		"url": "sindresorhus.com"
+		"url": "https://sindresorhus.com"
 	},
 	"bin": {
 		"npm-name": "cli.js"
 	},
 	"engines": {
-		"node": ">=8"
+		"node": ">=10"
 	},
 	"scripts": {
 		"test": "xo && ava"
@@ -37,18 +38,18 @@
 		"find"
 	],
 	"dependencies": {
-		"chalk": "^2.4.2",
-		"log-symbols": "^2.2.0",
-		"meow": "^5.0.0",
-		"npm-name": "^5.5.0",
-		"ora": "^3.1.0",
+		"chalk": "^3.0.0",
+		"log-symbols": "^3.0.0",
+		"meow": "^6.0.1",
+		"npm-name": "^6.0.0",
+		"ora": "^4.0.3",
+		"org-regex": "^1.0.0",
 		"squatter": "^0.2.0",
-		"terminal-link": "^1.2.0",
-		"org-regex": "^1.0.0"
+		"terminal-link": "^2.1.1"
 	},
 	"devDependencies": {
 		"ava": "^2.1.0",
-		"execa": "^1.0.0",
-		"xo": "^0.24.0"
+		"execa": "^4.0.0",
+		"xo": "^0.26.1"
 	}
 }
