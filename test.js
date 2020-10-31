@@ -37,6 +37,6 @@ test('multiple packages', async t => {
 });
 
 test('similar multiple packages', async t => {
-	const {stdout, exitCode} = await t.throwsAsync(execa('./cli.js', ['chalk', randomName(), '--color', '--similar']));
+	const {stdout} = await t.throwsAsync(execa('./cli.js', ['chalk', randomName(), '--color', '--similar']));
 	t.regex(stdout, /is unavailable(.*)is available/s);
 });

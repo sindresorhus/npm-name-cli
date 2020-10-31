@@ -1,6 +1,6 @@
 const squatter = require('squatter');
 const npmName = require('npm-name');
-const organizationRegex = require('org-regex')({ exact: true });
+const organizationRegex = require('org-regex')({exact: true});
 const thesaurus = require('thesaurus');
 const slugify = require('slugify').default;
 /**
@@ -23,7 +23,7 @@ async function checkNames(input) {
 			const ret = {
 				name,
 				isAvailable,
-				isOrganization: organizationRegex.test(name),
+				isOrganization: organizationRegex.test(name)
 			};
 
 			if (!isAvailable && !ret.isOrganization) {
@@ -53,12 +53,10 @@ async function getSimilarPackageNames(pkg) {
 		const name = pkg.name.replace(/@/, '');
 		const names = thesaurus.find(name);
 		if (names) {
-			const filteredNames = names.map((name) => slugify(name.toLowerCase()));
-			return pkg.isOrganization
-				? filteredNames.map((item) => `@${item}`)
-				: filteredNames;
+			const filteredNames = names.map(name => slugify(name.toLowerCase()));
+			return pkg.isOrganization ? filteredNames.map(item => `@${item}`) : filteredNames;
 		}
 	}
 }
 
-module.exports = { getSimilarPackageNames, checkNames };
+module.exports = {getSimilarPackageNames, checkNames};

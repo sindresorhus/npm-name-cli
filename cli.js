@@ -98,6 +98,7 @@ const spinner = ora(
 							thing => thing.isAvailable
 						);
 					}
+
 					secondSpinner.stop();
 					if (similarPackages && similarPackages.length > 0) {
 						console.log('\nSimilar names:\n');
@@ -109,18 +110,18 @@ const spinner = ora(
 						console.log('\nNo similar packages found.');
 					}
 				}
+
 				secondSpinner.stop();
 			}
 		}
 
 		process.exit(
-			packages.every(pkg => Boolean(pkg.isAvailable || pkg.isSquatter))
-				? 0
-				: 2
+			packages.every(pkg => Boolean(pkg.isAvailable || pkg.isSquatter)) ? 0	: 2
 		);
 	}
+
 	process.exit(0);
-})().catch((error) => {
+})().catch(error => {
 	spinner.stop();
 	console.error(error);
 	process.exit(1);
