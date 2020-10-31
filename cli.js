@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-"use strict";
-const meow = require("meow");
-const logSymbols = require("log-symbols");
-const chalk = require("chalk");
-const terminalLink = require("terminal-link");
-const ora = require("ora");
-const { getSimilarPackageNames, checkNames } = require("./util");
+'use strict';
+const meow = require('meow');
+const logSymbols = require('log-symbols');
+const chalk = require('chalk');
+const terminalLink = require('terminal-link');
+const ora = require('ora');
+const { getSimilarPackageNames, checkNames } = require('./util');
 
 const cli = meow(
 	`
@@ -17,29 +17,29 @@ const cli = meow(
 
 	Examples
 	  $ npm-name chalk
-	  ${logSymbols.error} ${chalk.bold("chalk")} is unavailable
+	  ${logSymbols.error} ${chalk.bold('chalk')} is unavailable
 	  $ npm-name abc123
-	  ${logSymbols.warning} ${chalk.bold("abc123")} is squatted
+	  ${logSymbols.warning} ${chalk.bold('abc123')} is squatted
 	  $ npm-name --similar bigiron
-		${logSymbols.warning} ${chalk.bold("bigiron")} is unavailable
+		${logSymbols.warning} ${chalk.bold('bigiron')} is unavailable
 		\nSimilar names:\n
-		${logSymbols.success} ${chalk.bold("bigcactus")} is available;
+		${logSymbols.success} ${chalk.bold('bigcactus')} is available;
 	  $ npm-name unicorn-cake
-	  ${logSymbols.success} ${chalk.bold("unicorn-cake")} is available
+	  ${logSymbols.success} ${chalk.bold('unicorn-cake')} is available
 	  $ npm-name @ava
-	  ${logSymbols.error} ${chalk.bold("@ava")} is unavailable
+	  ${logSymbols.error} ${chalk.bold('@ava')} is unavailable
 	  $ npm-name @abc123
-	  ${logSymbols.success} ${chalk.bold("@abc123")} is available
+	  ${logSymbols.success} ${chalk.bold('@abc123')} is available
 	  $ npm-name @sindresorhus/is unicorn-cake
-	  ${logSymbols.error} ${chalk.bold("@sindresorhus/is")} is unavailable
-	  ${logSymbols.success} ${chalk.bold("unicorn-cake")} is available
+	  ${logSymbols.error} ${chalk.bold('@sindresorhus/is')} is unavailable
+	  ${logSymbols.success} ${chalk.bold('unicorn-cake')} is available
 
 	Exits with code 0 when all names are available or 2 when any names are taken
 `,
 	{
 		flags: {
 			similar: {
-				type: "boolean",
+				type: 'boolean',
 			},
 		},
 	}
@@ -48,7 +48,7 @@ const cli = meow(
 const { input } = cli;
 
 if (input.length === 0) {
-	console.error("Specify one or more package names");
+	console.error('Specify one or more package names');
 	process.exit(1);
 }
 
@@ -71,7 +71,7 @@ function log(pkg) {
 // Main
 
 const spinner = ora(
-	`Checking ${input.length === 1 ? "name" : "names"} on npmjs.com…`
+	`Checking ${input.length === 1 ? 'name' : 'names'} on npmjs.com…`
 ).start();
 
 (async () => {
@@ -107,7 +107,7 @@ const spinner = ora(
 						}
 					} else {
 						secondSpinner.stop();
-						console.log("\nNo similar packages found.");
+						console.log('\nNo similar packages found.');
 					}
 				}
 				secondSpinner.stop();
