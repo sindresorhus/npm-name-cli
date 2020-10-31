@@ -34,7 +34,7 @@ async function checkNames(input) {
 		})
 	);
 
-	return packages
+	return packages;
 }
 
 /**
@@ -43,22 +43,18 @@ async function checkNames(input) {
  * @param {{
  *   name: string;
  *   isAvailable: boolean;
- *   isOrganisation: boolean;
- * 	 isSquatter: boolean;
+ *   isOrganization: boolean;
+ * 	 isSquatter?: boolean;
  *  }} pkg
+ *
+ * @return {Promise<Array<string> | void>}
  */
 async function getSimilarPackageNames(pkg) {
 	if (pkg.name) {
 		const names = thesaurus.find(pkg.name);
 		if (names) {
-			const filteredNames = names
-				.map((name) => slugify(name.toLowerCase()))
-				.slice(0, 5);
-
-			const things = await checkNames(filteredNames);
-			if (things) {
-				return things.filter((thing) => thing.isAvailable);
-			}
+			const filteredNames = names.map((name) => slugify(name.toLowerCase()));
+			return filteredNames;
 		}
 	}
 }

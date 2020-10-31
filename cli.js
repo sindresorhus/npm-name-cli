@@ -54,6 +54,8 @@ function log(pkg) {
 	}
 }
 
+// Main
+
 const spinner = ora(
 	`Checking ${input.length === 1 ? "name" : "names"} on npmjs.com…`
 ).start();
@@ -62,12 +64,30 @@ const spinner = ora(
 	const packages = await checkNames(input);
 	spinner.stop();
 
-
-	console.log('packages', packages)
-
 	if (packages) {
 		for (const pkg of packages) {
 			log(pkg);
+
+			// Check similar names
+			if (!pkg.isAvailable) {
+				const similarNames = await getSimilarPackageNames(pkg);
+				if (similarNames) {
+					const similarNamesArray = similarNames;
+
+					let similarPackages = await checkNames(similarNamesArray);
+					if (similarPackages) {
+						similarPackages = similarPackages.filter(
+							(thing) => thing.isAvailable
+						);
+					}
+					if (similarPackages) {
+						console.log(`\nSimilar names: `);
+						for (const item of similarPackages) {
+							log(item);
+						}
+					}
+				}
+			}
 		}
 
 		process.exit(
