@@ -3,28 +3,9 @@
 const meow = require("meow");
 const logSymbols = require("log-symbols");
 const chalk = require("chalk");
-const squatter = require("squatter");
-const npmName = require("npm-name");
 const terminalLink = require("terminal-link");
 const ora = require("ora");
-const organizationRegex = require("org-regex")({ exact: true });
-const thesaurus = require("thesaurus");
-const slugify = require("slugify");
-
-/**
- * Gets a list of similar package names that are avaliable
- *
- * @param {string} name
- */
-function getSimilarPackageNames(name) {
-	if (name) {
-		const names = thesaurus.find(name);
-		if (names) {
-			const filteredNames = names.map((name) => slugify(name.toLowerCase()));
-			return filteredNames;
-		}
-	}
-}
+const { getSimilarPackageNames, checkNames } = require("./util");
 
 const cli = meow(`
 	Usage
@@ -59,6 +40,7 @@ if (input.length === 0) {
 
 function log(pkg) {
 	const styledName = chalk.bold(pkg.name);
+
 	const linkedName = pkg.isOrganization
 		? terminalLink(styledName, `https://www.npmjs.com/org/${pkg.name.slice(1)}`)
 		: terminalLink(styledName, `https://www.npmjs.com/package/${pkg.name}`);
@@ -67,10 +49,8 @@ function log(pkg) {
 		console.log(`${logSymbols.success} ${styledName} is available`);
 	} else if (pkg.isSquatter) {
 		console.log(`${logSymbols.warning} ${linkedName} is squatted`);
-		console.log(getSimilarPackageNames(pkg.name));
 	} else {
 		console.log(`${logSymbols.error} ${linkedName} is unavailable`);
-		console.log(getSimilarPackageNames(pkg.name));
 	}
 }
 
@@ -79,33 +59,24 @@ const spinner = ora(
 ).start();
 
 (async () => {
-	const result = await npmName.many(input);
-
-	const packages = await Promise.all(
-		[...result].map(async ([name, isAvailable]) => {
-			const ret = {
-				name,
-				isAvailable,
-				isOrganization: organizationRegex.test(name),
-			};
-
-			if (!isAvailable && !ret.isOrganization) {
-				ret.isSquatter = await squatter(ret.name);
-			}
-
-			return ret;
-		})
-	);
-
+	const packages = await checkNames(input);
 	spinner.stop();
 
-	for (const pkg of packages) {
-		log(pkg);
-	}
 
-	process.exit(
-		packages.every((pkg) => Boolean(pkg.isAvailable || pkg.isSquatter)) ? 0 : 2
-	);
+	console.log('packages', packages)
+
+	if (packages) {
+		for (const pkg of packages) {
+			log(pkg);
+		}
+
+		process.exit(
+			packages.every((pkg) => Boolean(pkg.isAvailable || pkg.isSquatter))
+				? 0
+				: 2
+		);
+	}
+	process.exit(0);
 })().catch((error) => {
 	spinner.stop();
 	console.error(error);
