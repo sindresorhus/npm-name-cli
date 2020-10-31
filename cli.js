@@ -7,9 +7,13 @@ const terminalLink = require("terminal-link");
 const ora = require("ora");
 const { getSimilarPackageNames, checkNames } = require("./util");
 
-const cli = meow(`
+const cli = meow(
+	`
 	Usage
-	  $ npm-name <name> …
+		$ npm-name <name> …
+
+	Options
+		--similar  Find similar package names
 
 	Examples
 	  $ npm-name chalk
@@ -18,6 +22,8 @@ const cli = meow(`
 	  ${logSymbols.warning} ${chalk.bold("abc123")} is squatted
 	  $ npm-name --similar bigiron
 		${logSymbols.warning} ${chalk.bold("bigiron")} is unavailable
+		\nSimilar names:\n
+		${logSymbols.success} ${chalk.bold("bigcactus")} is available;
 	  $ npm-name unicorn-cake
 	  ${logSymbols.success} ${chalk.bold("unicorn-cake")} is available
 	  $ npm-name @ava
@@ -29,7 +35,15 @@ const cli = meow(`
 	  ${logSymbols.success} ${chalk.bold("unicorn-cake")} is available
 
 	Exits with code 0 when all names are available or 2 when any names are taken
-`);
+`,
+	{
+		flags: {
+			similar: {
+				type: "boolean",
+			},
+		},
+	}
+);
 
 const { input } = cli;
 
@@ -69,7 +83,7 @@ const spinner = ora(
 			log(pkg);
 
 			// Check similar names
-			if (!pkg.isAvailable) {
+			if (cli.flags.similar) {
 				const spinner = ora(`Checking for similar names on npmjs.com…`).start();
 
 				const similarNames = await getSimilarPackageNames(pkg);
@@ -84,7 +98,7 @@ const spinner = ora(
 					}
 					spinner.stop();
 
-					if (similarPackages) {
+					if (similarPackages && similarPackages.length > 0) {
 						console.log(`\nSimilar names:\n`);
 						for (const item of similarPackages) {
 							log(item);
