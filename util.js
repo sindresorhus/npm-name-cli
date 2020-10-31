@@ -55,7 +55,6 @@ async function getSimilarPackageNames(pkg) {
 		const names = thesaurus.find(name);
 		if (names) {
 			const filteredNames = names.map((name) => slugify(name.toLowerCase()));
-			console.log(pkg.isOrganization);
 			return pkg.isOrganization
 				? filteredNames.map((item) => `@${item}`)
 				: filteredNames;
