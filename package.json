@@ -45,7 +45,8 @@
 		"ora": "^4.0.3",
 		"org-regex": "^1.0.0",
 		"squatter": "^0.2.0",
-		"terminal-link": "^2.1.1"
+		"terminal-link": "^2.1.1",
+		"thesaurus": "0.0.1"
 	},
 	"devDependencies": {
 		"ava": "^2.1.0",
