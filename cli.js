@@ -84,7 +84,9 @@ const spinner = ora(
 
 			// Check similar names
 			if (cli.flags.similar) {
-				const spinner = ora(`Checking for similar names on npmjs.com…`).start();
+				const secondSpinner = ora(
+					`Checking for similar names on npmjs.com…`
+				).start();
 
 				const similarNames = await getSimilarPackageNames(pkg);
 				if (similarNames) {
@@ -96,18 +98,19 @@ const spinner = ora(
 							(thing) => thing.isAvailable
 						);
 					}
-					spinner.stop();
+					secondSpinner.stop();
 
 					if (similarPackages && similarPackages.length > 0) {
 						console.log(`\nSimilar names:\n`);
 						for (const item of similarPackages) {
 							log(item);
 						}
+					} else {
+						secondSpinner.stop();
+						console.log("\nNo similar packages found.");
 					}
-				} else {
-					console.log("No similar names found!");
-					spinner.stop();
 				}
+				secondSpinner.stop();
 			}
 		}
 
