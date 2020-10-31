@@ -5,7 +5,7 @@ const logSymbols = require('log-symbols');
 const chalk = require('chalk');
 const terminalLink = require('terminal-link');
 const ora = require('ora');
-const { getSimilarPackageNames, checkNames } = require('./util');
+const {getSimilarPackageNames, checkNames} = require('./util');
 
 const cli = meow(
 	`
@@ -39,13 +39,13 @@ const cli = meow(
 	{
 		flags: {
 			similar: {
-				type: 'boolean',
-			},
-		},
+				type: 'boolean'
+			}
+		}
 	}
 );
 
-const { input } = cli;
+const {input} = cli;
 
 if (input.length === 0) {
 	console.error('Specify one or more package names');
@@ -55,9 +55,9 @@ if (input.length === 0) {
 function log(pkg) {
 	const styledName = chalk.bold(pkg.name);
 
-	const linkedName = pkg.isOrganization
-		? terminalLink(styledName, `https://www.npmjs.com/org/${pkg.name.slice(1)}`)
-		: terminalLink(styledName, `https://www.npmjs.com/package/${pkg.name}`);
+	const linkedName = pkg.isOrganization ?
+		terminalLink(styledName, `https://www.npmjs.com/org/${pkg.name.slice(1)}`) :
+		terminalLink(styledName, `https://www.npmjs.com/package/${pkg.name}`);
 
 	if (pkg.isAvailable) {
 		console.log(`${logSymbols.success} ${styledName} is available`);
@@ -85,7 +85,7 @@ const spinner = ora(
 			// Check similar names
 			if (cli.flags.similar) {
 				const secondSpinner = ora(
-					`Checking for similar names on npmjs.com…`
+					'Checking for similar names on npmjs.com…'
 				).start();
 
 				const similarNames = await getSimilarPackageNames(pkg);
@@ -95,13 +95,12 @@ const spinner = ora(
 					let similarPackages = await checkNames(similarNamesArray);
 					if (similarPackages) {
 						similarPackages = similarPackages.filter(
-							(thing) => thing.isAvailable
+							thing => thing.isAvailable
 						);
 					}
 					secondSpinner.stop();
-
 					if (similarPackages && similarPackages.length > 0) {
-						console.log(`\nSimilar names:\n`);
+						console.log('\nSimilar names:\n');
 						for (const item of similarPackages) {
 							log(item);
 						}
@@ -115,7 +114,7 @@ const spinner = ora(
 		}
 
 		process.exit(
-			packages.every((pkg) => Boolean(pkg.isAvailable || pkg.isSquatter))
+			packages.every(pkg => Boolean(pkg.isAvailable || pkg.isSquatter))
 				? 0
 				: 2
 		);

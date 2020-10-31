@@ -1,8 +1,8 @@
-const squatter = require("squatter");
-const npmName = require("npm-name");
-const organizationRegex = require("org-regex")({ exact: true });
-const thesaurus = require("thesaurus");
-const slugify = require("slugify").default;
+const squatter = require('squatter');
+const npmName = require('npm-name');
+const organizationRegex = require('org-regex')({ exact: true });
+const thesaurus = require('thesaurus');
+const slugify = require('slugify').default;
 /**
  * Check whether a bunch of names are available
  * @param {string[]} input
@@ -46,12 +46,11 @@ async function checkNames(input) {
  *   isOrganization: boolean;
  * 	 isSquatter?: boolean;
  *  }} pkg
- *
  * @return {Promise<Array<string> | void>}
  */
 async function getSimilarPackageNames(pkg) {
 	if (pkg.name) {
-		const name = pkg.name.replace(/@/, "");
+		const name = pkg.name.replace(/@/, '');
 		const names = thesaurus.find(name);
 		if (names) {
 			const filteredNames = names.map((name) => slugify(name.toLowerCase()));
