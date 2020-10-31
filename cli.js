@@ -9,6 +9,7 @@ const terminalLink = require("terminal-link");
 const ora = require("ora");
 const organizationRegex = require("org-regex")({ exact: true });
 const thesaurus = require("thesaurus");
+const slugify = require("slugify");
 
 /**
  * Gets a list of similar package names that are avaliable
@@ -17,7 +18,11 @@ const thesaurus = require("thesaurus");
  */
 function getSimilarPackageNames(name) {
 	if (name) {
-		console.log(thesaurus.find(name));
+		const names = thesaurus.find(name);
+		if (names) {
+			const filteredNames = names.map((name) => slugify(name.toLowerCase()));
+			return filteredNames;
+		}
 	}
 }
 
