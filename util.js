@@ -51,10 +51,14 @@ async function checkNames(input) {
  */
 async function getSimilarPackageNames(pkg) {
 	if (pkg.name) {
-		const names = thesaurus.find(pkg.name);
+		const name = pkg.name.replace(/@/, "");
+		const names = thesaurus.find(name);
 		if (names) {
 			const filteredNames = names.map((name) => slugify(name.toLowerCase()));
-			return filteredNames;
+			console.log(pkg.isOrganization);
+			return pkg.isOrganization
+				? filteredNames.map((item) => `@${item}`)
+				: filteredNames;
 		}
 	}
 }
