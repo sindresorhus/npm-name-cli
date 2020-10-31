@@ -70,6 +70,8 @@ const spinner = ora(
 
 			// Check similar names
 			if (!pkg.isAvailable) {
+				const spinner = ora(`Checking for similar names on npmjs.com…`).start();
+
 				const similarNames = await getSimilarPackageNames(pkg);
 				if (similarNames) {
 					const similarNamesArray = similarNames;
@@ -80,12 +82,17 @@ const spinner = ora(
 							(thing) => thing.isAvailable
 						);
 					}
+					spinner.stop();
+
 					if (similarPackages) {
-						console.log(`\nSimilar names: `);
+						console.log(`\nSimilar names:\n`);
 						for (const item of similarPackages) {
 							log(item);
 						}
 					}
+				} else {
+					console.log("No similar names found!");
+					spinner.stop();
 				}
 			}
 		}
