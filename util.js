@@ -2,20 +2,8 @@ const squatter = require('squatter');
 const npmName = require('npm-name');
 const organizationRegex = require('org-regex')({exact: true});
 const thesaurus = require('thesaurus');
-const slugify = require('slugify').default;
+const slugify = require('@sindresorhus/slugify');
 
-/**
- * The package information
- * @typedef {Object} PackageInfo
- * @property {string} name
- * @property {boolean} isAvailable
- * @property {boolean} isOrganization
- * @property {boolean} [isSquatter]
-
- * Check whether a bunch of names are available
- * @param {string[]} input
- * @return {Promise<Array<PackageInfo>>}
- */
 async function checkNames(input) {
 	const result = await npmName.many(input);
 
@@ -32,12 +20,6 @@ async function checkNames(input) {
 	return names;
 }
 
-/**
- * Gets a list of similar package names that are available.
- *
- * @param PackageInfo pkg
- * @return {Promise<Array<PackageInfo>>}
- */
 async function getSimilarPackages({name, isOrganization}) {
 	const similarNames = thesaurus.find(name.replace(/@/, ''));
 	if (!similarNames) {

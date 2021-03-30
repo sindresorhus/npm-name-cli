@@ -12,14 +12,14 @@ const cli = meow(`
 	  $ npm-name <name> …
 
 	Options
-		--similar  Find similar package names
+		--similar  Find similar package names too
 
 	Examples
 	  $ npm-name chalk
 	  ${logSymbols.error} ${chalk.bold('chalk')} is unavailable
 	  $ npm-name abc123
 	  ${logSymbols.warning} ${chalk.bold('abc123')} is squatted
-	  $ npm-name --similar hello
+	  $ npm-name hello --similar
 	  ${logSymbols.warning} ${chalk.bold('hello')} is unavailable
 	  \n\t  Similar names:\n
 	  ${logSymbols.success} ${chalk.bold('hullo')} is available
@@ -82,6 +82,7 @@ const spinner = ora(`Checking ${input.length === 1 ? 'name' : 'names'} on npmjs.
 
 		const similarCheckingSpinner = ora('Checking for similar names on npmjs.com…').start();
 
+		// eslint-disable-next-line no-await-in-loop
 		const similarPackages = await getSimilarPackages(package_);
 
 		similarCheckingSpinner.stop();

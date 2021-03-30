@@ -25,7 +25,12 @@ $ npm-name --help
     ✖ chalk is unavailable
     $ npm-name abc123
     ⚠ abc123 is squatted
-    $ npm-name unicorn-cake
+    $ npm-name hello --similar
+    ⚠ hello is squatted
+	Similar names:
+	✔ hullo is available
+	✔ how-do-you-do is available
+	$ npm-name unicorn-cake
     ✔ unicorn-cake is available
     $ npm-name @ava
     ✖ @ava is unavailable
@@ -48,7 +53,9 @@ $ npm-name --help
 
 3. Supports checking the availability of organization names
 
-4. Performance
+4. Suggest other similar names if not available
+
+5. Performance
 
   Using npm 4.0.2
 
