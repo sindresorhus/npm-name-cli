@@ -20,8 +20,8 @@ const cli = meow(`
 	  $ npm-name abc123
 	  ${logSymbols.warning} ${chalk.bold('abc123')} is squatted
 	  $ npm-name hello --similar
-	  ${logSymbols.warning} ${chalk.bold('hello')} is unavailable
-	  \n\t  Similar names:\n
+	  ${logSymbols.warning} ${chalk.bold('hello')} is squatted
+	  Similar names:
 	  ${logSymbols.success} ${chalk.bold('hullo')} is available
 	  ${logSymbols.success} ${chalk.bold('how-do-you-do')} is available
 	  $ npm-name unicorn-cake
@@ -87,10 +87,11 @@ const spinner = ora(`Checking ${input.length === 1 ? 'name' : 'names'} on npmjs.
 
 		similarCheckingSpinner.stop();
 		if (similarPackages.length > 0) {
-			console.log('\nSimilar names:\n');
+			console.log('Similar names:');
 			similarPackages.forEach(log);
+			console.log();
 		} else {
-			console.log('\nNo similar packages found.');
+			console.log('No similar packages found.\n');
 		}
 	}
 

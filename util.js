@@ -11,7 +11,7 @@ async function checkNames(input) {
 		const ret = {name, isAvailable, isOrganization: organizationRegex.test(name)};
 
 		if (!isAvailable && !ret.isOrganization) {
-			ret.isSquatter = await squatter(ret.name);
+			ret.isSquatter = await squatter(name);
 		}
 
 		return ret;
