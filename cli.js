@@ -12,24 +12,30 @@ const cli = meow(`
 	  $ npm-name <name> …
 
 	Options
-		--similar  Find similar package names too
+	  --similar  Find similar package names too
 
 	Examples
 	  $ npm-name chalk
 	  ${logSymbols.error} ${chalk.bold('chalk')} is unavailable
+
 	  $ npm-name abc123
 	  ${logSymbols.warning} ${chalk.bold('abc123')} is squatted
+
 	  $ npm-name hello --similar
 	  ${logSymbols.warning} ${chalk.bold('hello')} is squatted
 	  Similar names:
 	  ${logSymbols.success} ${chalk.bold('hullo')} is available
 	  ${logSymbols.success} ${chalk.bold('how-do-you-do')} is available
+
 	  $ npm-name unicorn-cake
 	  ${logSymbols.success} ${chalk.bold('unicorn-cake')} is available
+
 	  $ npm-name @ava
 	  ${logSymbols.error} ${chalk.bold('@ava')} is unavailable
+
 	  $ npm-name @abc123
 	  ${logSymbols.success} ${chalk.bold('@abc123')} is available
+
 	  $ npm-name @sindresorhus/is unicorn-cake
 	  ${logSymbols.error} ${chalk.bold('@sindresorhus/is')} is unavailable
 	  ${logSymbols.success} ${chalk.bold('unicorn-cake')} is available
