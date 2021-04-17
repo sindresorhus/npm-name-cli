@@ -23,19 +23,25 @@ $ npm-name --help
   Examples
     $ npm-name chalk
     ✖ chalk is unavailable
+
     $ npm-name abc123
     ⚠ abc123 is squatted
+
     $ npm-name hello --similar
     ⚠ hello is squatted
-	Similar names:
-	✔ hullo is available
-	✔ how-do-you-do is available
-	$ npm-name unicorn-cake
+    Similar names:
+    ✔ hullo is available
+    ✔ how-do-you-do is available
+
+    $ npm-name unicorn-cake
     ✔ unicorn-cake is available
+
     $ npm-name @ava
     ✖ @ava is unavailable
+
     $ npm-name @abc123
     ✔ @abc123 is available
+
     $ npm-name @sindresorhus/is unicorn-cake
     ✖ @sindresorhus/is is unavailable
     ✔ unicorn-cake is available
