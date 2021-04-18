@@ -35,3 +35,15 @@ test('multiple packages', async t => {
 	t.is(exitCode, 2);
 	t.regex(stdout, /is unavailable(.*)is available/s);
 });
+
+test('is available in similar search', async t => {
+	const {stdout, exitCode} = await execa('./cli.js', [randomName(), '--color', '--similar']);
+	t.is(exitCode, 0);
+	t.regex(stdout, /is available(.*)No similar packages found/s);
+});
+
+test('is not available in similar search', async t => {
+	const {stdout, exitCode} = await t.throwsAsync(execa('./cli.js', ['chalk', '--color', '--similar']));
+	t.is(exitCode, 2);
+	t.regex(stdout, /is unavailable(.*)Similar names(.*)is available/s);
+});
