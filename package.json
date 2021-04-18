@@ -10,17 +10,19 @@
 		"email": "sindresorhus@gmail.com",
 		"url": "https://sindresorhus.com"
 	},
+	"type": "module",
 	"bin": {
-		"npm-name": "cli.js"
+		"npm-name": "./cli.js"
 	},
 	"engines": {
-		"node": ">=10"
+		"node": ">=12"
 	},
 	"scripts": {
 		"test": "xo && ava"
 	},
 	"files": [
-		"cli.js"
+		"cli.js",
+		"utilities.js"
 	],
 	"keywords": [
 		"cli-app",
@@ -38,20 +40,20 @@
 		"find"
 	],
 	"dependencies": {
-		"@sindresorhus/slugify": "^1.1.0",
-		"chalk": "^3.0.0",
-		"log-symbols": "^3.0.0",
-		"meow": "^6.0.1",
-		"npm-name": "^6.0.0",
-		"ora": "^4.0.3",
+		"@sindresorhus/slugify": "^2.0.0",
+		"chalk": "^4.1.0",
+		"log-symbols": "^5.0.0",
+		"meow": "^9.0.0",
+		"npm-name": "^7.0.0",
+		"ora": "^5.4.0",
 		"org-regex": "^1.0.0",
-		"squatter": "^0.2.0",
-		"terminal-link": "^2.1.1",
+		"squatter": "^0.2.1",
+		"terminal-link": "^3.0.0",
 		"thesaurus": "0.0.1"
 	},
 	"devDependencies": {
-		"ava": "^2.1.0",
-		"execa": "^4.0.0",
-		"xo": "^0.26.1"
+		"ava": "^3.15.0",
+		"execa": "^5.0.0",
+		"xo": "^0.38.2"
 	}
 }

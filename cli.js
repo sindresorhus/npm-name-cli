@@ -1,13 +1,13 @@
 #!/usr/bin/env node
-'use strict';
-const meow = require('meow');
-const logSymbols = require('log-symbols');
-const chalk = require('chalk');
-const terminalLink = require('terminal-link');
-const ora = require('ora');
-const {getSimilarPackages, checkNames} = require('./util');
+import meow from 'meow';
+import logSymbols from 'log-symbols';
+import chalk from 'chalk';
+import terminalLink from 'terminal-link';
+import ora from 'ora';
+import {getSimilarPackages, checkNames} from './utilities.js';
 
-const cli = meow(`
+const cli = meow(
+	`
 	Usage
 	  $ npm-name <name> …
 
@@ -41,14 +41,14 @@ const cli = meow(`
 	  ${logSymbols.success} ${chalk.bold('unicorn-cake')} is available
 
 	Exits with code 0 when all names are available or 2 when any names are taken
-`,
-{
-	flags: {
-		similar: {
-			type: 'boolean'
+	`,
+	{
+		flags: {
+			similar: {
+				type: 'boolean'
+			}
 		}
 	}
-}
 );
 
 const {input} = cli;
@@ -77,6 +77,7 @@ const spinner = ora(`Checking ${input.length === 1 ? 'name' : 'names'} on npmjs.
 
 (async () => {
 	const packages = await checkNames(input);
+
 	spinner.stop();
 
 	for (const package_ of packages) {
@@ -92,16 +93,21 @@ const spinner = ora(`Checking ${input.length === 1 ? 'name' : 'names'} on npmjs.
 		const similarPackages = await getSimilarPackages(package_);
 
 		similarCheckingSpinner.stop();
+
 		if (similarPackages.length > 0) {
 			console.log('Similar names:');
-			similarPackages.forEach(log);
+
+			for (const package_ of similarPackages) {
+				log(package_);
+			}
+
 			console.log();
 		} else {
 			console.log('No similar packages found.\n');
 		}
 	}
 
-	process.exit(packages.every(pkg => Boolean(pkg.isAvailable || pkg.isSquatter)) ? 0 : 2);
+	process.exit(packages.every(package_ => Boolean(package_.isAvailable || package_.isSquatter)) ? 0 : 2);
 })().catch(error => {
 	spinner.stop();
 	console.error(error);
