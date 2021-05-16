@@ -13,7 +13,11 @@ export async function checkNames(name) {
 		const returnValue = {name, isAvailable, isOrganization: organizationRegex.test(name)};
 
 		if (!isAvailable && !returnValue.isOrganization) {
-			returnValue.isSquatter = await squatter(name);
+			try {
+				returnValue.isSquatter = await squatter(name);
+			} catch {
+				returnValue.isSquatter = false;
+			}
 		}
 
 		return returnValue;
