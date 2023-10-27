@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import process from 'node:process';
 import meow from 'meow';
 import logSymbols from 'log-symbols';
 import chalk from 'chalk';
@@ -43,12 +44,13 @@ const cli = meow(
 	Exits with code 0 when all names are available or 2 when any names are taken
 	`,
 	{
+		importMeta: import.meta,
 		flags: {
 			similar: {
-				type: 'boolean'
-			}
-		}
-	}
+				type: 'boolean',
+			},
+		},
+	},
 );
 
 const {input} = cli;
@@ -58,15 +60,15 @@ if (input.length === 0) {
 	process.exit(1);
 }
 
-function log(pkg) {
-	const styledName = chalk.bold(pkg.name);
-	const linkedName = pkg.isOrganization ?
-		terminalLink(styledName, `https://www.npmjs.com/org/${pkg.name.slice(1)}`) :
-		terminalLink(styledName, `https://www.npmjs.com/package/${pkg.name}`);
+function log(package_) {
+	const styledName = chalk.bold(package_.name);
+	const linkedName = package_.isOrganization
+		? terminalLink(styledName, `https://www.npmjs.com/org/${package_.name.slice(1)}`)
+		: terminalLink(styledName, `https://www.npmjs.com/package/${package_.name}`);
 
-	if (pkg.isAvailable) {
+	if (package_.isAvailable) {
 		console.log(`${logSymbols.success} ${styledName} is available`);
-	} else if (pkg.isSquatter) {
+	} else if (package_.isSquatter) {
 		console.log(`${logSymbols.warning} ${linkedName} is squatted`);
 	} else {
 		console.log(`${logSymbols.error} ${linkedName} is unavailable`);
@@ -75,7 +77,7 @@ function log(pkg) {
 
 const spinner = ora(`Checking ${input.length === 1 ? 'name' : 'names'} on npmjs.com…`).start();
 
-(async () => {
+async function main() {
 	const packages = await checkNames(input);
 
 	spinner.stop();
@@ -108,8 +110,12 @@ const spinner = ora(`Checking ${input.length === 1 ? 'name' : 'names'} on npmjs.
 	}
 
 	process.exit(packages.every(package_ => Boolean(package_.isAvailable || package_.isSquatter)) ? 0 : 2);
-})().catch(error => {
+}
+
+try {
+	await main();
+} catch (error) {
 	spinner.stop();
 	console.error(error);
 	process.exit(1);
-});
+}

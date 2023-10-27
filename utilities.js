@@ -1,16 +1,15 @@
 import squatter from 'squatter';
 import {npmNameMany} from 'npm-name';
-import orgRegex from 'org-regex';
 import thesaurus from 'thesaurus';
 import slugify from '@sindresorhus/slugify';
 
-const organizationRegex = orgRegex({exact: true});
+const npmOrganizationRegex = /^@[a-z\d][\w-.]+\/?$/i;
 
 export async function checkNames(name) {
 	const result = await npmNameMany(name);
 
 	const names = await Promise.all([...result].map(async ([name, isAvailable]) => {
-		const returnValue = {name, isAvailable, isOrganization: organizationRegex.test(name)};
+		const returnValue = {name, isAvailable, isOrganization: npmOrganizationRegex.test(name)};
 
 		if (!isAvailable && !returnValue.isOrganization) {
 			try {

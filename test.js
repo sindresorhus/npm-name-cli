@@ -1,5 +1,5 @@
 import test from 'ava';
-import execa from 'execa';
+import {execa} from 'execa';
 
 const randomName = () => `asdasfgrgafadsgaf${Math.random().toString().slice(2)}`;
 

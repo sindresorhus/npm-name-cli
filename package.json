@@ -15,7 +15,7 @@
 		"npm-name": "./cli.js"
 	},
 	"engines": {
-		"node": ">=12"
+		"node": ">=18"
 	},
 	"scripts": {
 		"test": "xo && ava"
@@ -40,20 +40,19 @@
 		"find"
 	],
 	"dependencies": {
-		"@sindresorhus/slugify": "^2.0.0",
-		"chalk": "^4.1.0",
-		"log-symbols": "^5.0.0",
-		"meow": "^9.0.0",
-		"npm-name": "^7.0.0",
-		"ora": "^5.4.0",
-		"org-regex": "^1.0.0",
+		"@sindresorhus/slugify": "^2.2.1",
+		"chalk": "^5.3.0",
+		"log-symbols": "^6.0.0",
+		"meow": "^13.2.0",
+		"npm-name": "^8.0.0",
+		"ora": "^8.0.1",
 		"squatter": "^0.2.1",
 		"terminal-link": "^3.0.0",
 		"thesaurus": "0.0.1"
 	},
 	"devDependencies": {
-		"ava": "^3.15.0",
-		"execa": "^5.0.0",
-		"xo": "^0.38.2"
+		"ava": "^6.1.1",
+		"execa": "^8.0.1",
+		"xo": "^0.57.0"
 	}
 }

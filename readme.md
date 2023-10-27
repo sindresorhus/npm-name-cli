@@ -8,8 +8,8 @@
 
 ## Install
 
-```
-$ npm install --global npm-name-cli
+```sh
+npm install --global npm-name-cli
 ```
 
 ## Usage
